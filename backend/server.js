@@ -35,17 +35,17 @@ app.post('/upload', upload.single('pdf'), async (req, res) => {
 });
 
 app.post('/simplify', async (req, res) => {
-  const { text } = req.body;
+  const { text, context } = req.body;
   if (!text) {
     return res.status(400).send('No text provided');
   }
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: [
-        {"role": "system", "content": "You are a helpful assistant that simplifies academic text."},
-        {"role": "user", "content": `Please simplify the following academic text, making it easier to understand while preserving the key points: ${text}`}
+        {"role": "system", "content": "You are a helpful assistant that simplifies academic text while maintaining its key points and academic integrity."},
+        {"role": "user", "content": `${context}\n\nPlease simplify the following text:\n\n${text}`}
       ],
       max_tokens: 500  // Adjust as needed
     });
