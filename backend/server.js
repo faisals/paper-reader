@@ -35,17 +35,32 @@ app.post('/upload', upload.single('pdf'), async (req, res) => {
 });
 
 app.post('/simplify', async (req, res) => {
-  const { text, context } = req.body;
+  const { text, context, level } = req.body;
   if (!text) {
     return res.status(400).send('No text provided');
   }
 
+  let prompt;
+  switch (level) {
+    case 'easy':
+      prompt = "Simplify this academic text for a high school student, using simple language and explaining any complex terms:";
+      break;
+    case 'medium':
+      prompt = "Simplify this academic text for an undergraduate student, maintaining some technical language but explaining complex concepts:";
+      break;
+    case 'advanced':
+      prompt = "Simplify this academic text for a graduate student, maintaining most technical language but clarifying very complex ideas:";
+      break;
+    default:
+      prompt = "Simplify this academic text while maintaining its key points and academic integrity:";
+  }
+
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-3.5-turbo",
       messages: [
-        {"role": "system", "content": "You are a helpful assistant that simplifies academic text while maintaining its key points and academic integrity."},
-        {"role": "user", "content": `${context}\n\nPlease simplify the following text:\n\n${text}`}
+        {"role": "system", "content": "You are a helpful assistant that simplifies academic text."},
+        {"role": "user", "content": `${context}\n\n${prompt}\n\n${text}`}
       ],
       max_tokens: 500  // Adjust as needed
     });
