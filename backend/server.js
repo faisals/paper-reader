@@ -43,13 +43,13 @@ app.post('/simplify', async (req, res) => {
   let prompt;
   switch (level) {
     case 'easy':
-      prompt = "Simplify this academic text for a high school student, using simple language and explaining any complex terms:";
+      prompt = "Please simplify the following academic text for a high school student. Use straightforward and clear language, breaking down any complex terms and concepts into easily understandable explanations. Ensure that the essence of the content is retained, but presented in a way that a high school student with basic knowledge can comprehend without any prior expertise:";
       break;
     case 'medium':
-      prompt = "Simplify this academic text for an undergraduate student, maintaining some technical language but explaining complex concepts:";
+      prompt = "Please simplify the following academic text for an undergraduate student. Maintain some of the technical language appropriate for this level, but ensure that complex concepts are thoroughly explained. Use analogies and real-world examples to illustrate key points, and include diagrams where applicable to visualize complex ideas. Additionally, pose reflective questions at the end to encourage deeper understanding and engagement with the material. The goal is to strike a balance between preserving necessary technical terms and making the content accessible and engaging for a student with foundational knowledge in the subject. This version incorporates various learning tools to help students grasp the material more effectively: Analogies: Simplify complex concepts by comparing them to familiar situations or ideas.Real-world examples: Provide context and practical applications to make the content more relatable.Diagrams: Use visuals to represent complex ideas, aiding in comprehension.Reflective questions: Encourage students to think critically about the material and deepen their understanding.By integrating these elements, the prompt becomes a more comprehensive guide for simplifying academic texts while enhancing the learning experience for undergraduate students:";
       break;
     case 'advanced':
-      prompt = "Simplify this academic text for a graduate student, maintaining most technical language but clarifying very complex ideas:";
+      prompt = "Please simplify the following academic text for a graduate student. Retain most of the technical language appropriate for this level, but focus on clarifying the very complex ideas and concepts. The aim is to make the text more accessible to a graduate student who has a solid background in the subject, ensuring that they can grasp intricate details and nuanced arguments without losing the original depth and rigor of the content:";
       break;
     default:
       prompt = "Simplify this academic text while maintaining its key points and academic integrity:";
@@ -59,7 +59,7 @@ app.post('/simplify', async (req, res) => {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
-        {"role": "system", "content": "You are a helpful assistant that simplifies academic text."},
+        {"role": "system", "content": "You are a highly knowledgeable assistant specializing in simplifying academic text for various audiences. Your goal is to make complex information accessible and understandable, while retaining the essential details and context required by the audience."},
         {"role": "user", "content": `${context}\n\n${prompt}\n\n${text}`}
       ],
       max_tokens: 500  // Adjust as needed
