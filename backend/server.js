@@ -57,7 +57,7 @@ app.post('/simplify', async (req, res) => {
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: [
         {"role": "system", "content": "You are a highly knowledgeable assistant specializing in simplifying academic text for various audiences. Your goal is to make complex information accessible and understandable, while retaining the essential details and context required by the audience."},
         {"role": "user", "content": `${context}\n\n${prompt}\n\n${text}`}
