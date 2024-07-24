@@ -2,6 +2,7 @@ import React from 'react';
 import PDFViewer from './components/PDFViewer';
 import TextSimplifier from './components/TextSimplifier';
 import './App.css';
+import './markdown-styles.css';
 
 function App() {
   return (

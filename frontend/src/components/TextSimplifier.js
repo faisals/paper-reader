@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import '../markdown-styles.css';
 
 function TextSimplifier() {
   const [selectedText, setSelectedText] = useState('');
@@ -111,7 +114,11 @@ function TextSimplifier() {
         <button onClick={() => navigator.clipboard.writeText(simplifiedText)}>
           Copy
         </button>
-        <p>{simplifiedText}</p>
+        <div className="markdown-content">
+          <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+            {simplifiedText}
+          </ReactMarkdown>
+        </div>
       </div>
       <div className="selected-text">
         <h2>Selected Text</h2>
